@@ -25,3 +25,8 @@ func NewUser(name, email, password string) (*User, error) {
 		Password: string(hash),
 	}, nil
 }
+
+func (u *User) ValidatePassword(password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
+	return err == nil
+}
