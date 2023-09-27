@@ -3,21 +3,19 @@ package database
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 )
 
 const (
-	HOST      = "mysql"
-	DATABASE  = "todoapi"
-	USER      = "root"
-	PASSWORD  = "pass"
-	PORT      = "3306"
-	DB_DRIVER = "mysql"
+	HOST     = "db"
+	DATABASE = "todoapi"
+	USER     = "postgres"
+	PASSWORD = "postgres"
 )
 
 func ConnectToDatabase() (*sql.DB, error) {
-	var connectionString string = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", USER, PASSWORD, HOST, PORT, DATABASE)
-	db, err := sql.Open(DB_DRIVER, connectionString)
+	var connectionString string = fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable", HOST, USER, PASSWORD, DATABASE)
+	db, err := sql.Open("postgres", connectionString)
 	if err != nil {
 		return nil, err
 	}
