@@ -24,6 +24,7 @@ func main() {
 	server.AddHandler("/tasks", taskHandler.Create)
 	server.AddHandler("/tasks/{taskID}", taskHandler.Update)
 	server.AddHandler("/tasks/{taskID}", taskHandler.Delete)
+	server.AddHandler("/tasks/{userID}", taskHandler.FindAll)
 	fmt.Println("O SERVER SUBIU CARALHOOO")
 	server.Start()
 }

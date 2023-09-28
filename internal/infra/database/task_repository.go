@@ -70,3 +70,28 @@ func (r *TaskRepository) Delete(task *entity.Task) error {
 
 	return nil
 }
+
+func (r *TaskRepository) FindAll(userID string) ([]*entity.Task, error) {
+	var tasks []*entity.Task
+
+	stmt, err := r.Db.Prepare("SELECT id, name, finished, updated_at FROM tasks WHERE user_id=$1")
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := stmt.Query(userID)
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		var task entity.Task
+		err := rows.Scan(&task.ID, &task.Name, &task.Finished, &task.UpdatedAt)
+		if err != nil {
+			return nil, err
+		}
+		tasks = append(tasks, &task)
+	}
+
+	return tasks, nil
+}

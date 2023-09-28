@@ -72,3 +72,19 @@ func (h *TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 }
+
+func (h *TaskHandler) FindAll(w http.ResponseWriter, r *http.Request) {
+	var dto task.FindAllInputDTO
+
+	dto.UserID = chi.URLParam(r, "userID")
+
+	output, err := task.NewFindAllTasksUseCase(h.TaskRepository).Execute(dto)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(output)
+}

@@ -3,7 +3,7 @@ Host: localhost:3000
 Content-Type: application/json
 
 {
-  "name": "Aprender golang",
+  "name": "Aprender Clean Arch",
   "finished": false,
   "user_id": "6c37e1ef-ac21-4332-96f3-b7378a09543e"
 }
@@ -25,3 +25,8 @@ DELETE http://localhost:3000/tasks/b6d6f1e7-d522-4575-ba01-2e072fd0f643 HTTP/1.1
 Host: localhost:3000
 
 
+
+####
+
+GET http://localhost:3000/tasks/6c37e1ef-ac21-4332-96f3-b7378a09543e HTTP/1.1
+Host: localhost:3000
