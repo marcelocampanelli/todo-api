@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/jwtauth"
 )
 
 type WebServer struct {
@@ -27,6 +28,11 @@ func (s *WebServer) AddHandler(path string, handler http.HandlerFunc) {
 
 func (s *WebServer) Start() {
 	s.Router.Use(middleware.Logger)
+	s.Router.Use(middleware.Recoverer)
+	s.Router.Use(middleware.WithValue("jwt", jwtauth.JWTAuth{}))
+	s.Router.Use(middleware.WithValue("JwtExperesIn", 300))
+	s.Router.Use(middleware.WithValue("jwt", jwtauth.JWTAuth{}))
+
 	for path, handler := range s.Handlers {
 		s.Router.Handle(path, handler)
 	}
