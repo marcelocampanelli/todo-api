@@ -1,5 +1,7 @@
 package entity
 
 type UserRepositoryInterface interface {
-	Save(user *User) error
+	Create(user *User) error
+	Update(user *User) error
+	FindById(id string) (*User, error)
 }

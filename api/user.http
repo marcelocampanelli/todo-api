@@ -1,0 +1,21 @@
+POST http://localhost:3000/users HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+
+{
+  "name": "xabrau",
+  "email": "katiau@vaiwilson.com",
+  "password": "10203040"
+}
+
+###
+
+PUT http://localhost:3000/users/284582a8-28ce-40bf-8138-e823edcbeb5c HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+
+{
+"name": "ronaldinho",
+"email": "testeeeeee@testeeeeeeeeeeee.com",
+"password": "10203040"
+}

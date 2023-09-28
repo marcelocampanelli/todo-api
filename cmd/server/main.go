@@ -19,6 +19,7 @@ func main() {
 	server := webserver.NewWebServer(":3000")
 	userHandler := handlers.NewUserHadler(database.NewUserRepositoy(db))
 	server.AddHandler("/users", userHandler.Create)
+	server.AddHandler("/users/{userID}", userHandler.Update)
 	fmt.Println("O SERVER SUBIU CARALHOOO")
 	server.Start()
 }
