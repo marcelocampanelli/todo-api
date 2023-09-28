@@ -35,3 +35,17 @@ func (u *User) ValidatePassword(password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
 	return err == nil
 }
+
+func (u *User) Modify(name, email, password string) error {
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+
+	u.Name = name
+	u.Email = email
+	u.Password = string(hash)
+	u.UpdatedAt = time.Now()
+
+	return nil
+}
