@@ -7,3 +7,15 @@ Content-Type: application/json
   "email": "katiau@vaiwilson.com",
   "password": "10203040"
 }
+
+###
+
+PUT http://localhost:3000/users/dd2e3076-d4cf-4418-9e7e-1eb9e2ffc67d HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+
+{
+"name": "testeeeeeeeee",
+"email": "testeeeeee@testeeeeeeeeeeee.com",
+"password": "10203040"
+}

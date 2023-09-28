@@ -6,11 +6,11 @@ import (
 )
 
 type UpdateUserInputDTO struct {
-	ID       userPkgEntity.ID `json:"id"`
-	Name     string           `json:"name"`
-	Email    string           `json:"email"`
-	Password string           `json:"-"`
-	UpdateAt string           `json:"updated_at"`
+	ID       string `json:"id"`
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Password string `json:"-"`
+	UpdateAt string `json:"updated_at"`
 }
 
 type UpdateUserOutputDTO struct {
@@ -26,7 +26,7 @@ func NewUpdateUserUseCase(userRepository entity.UserRepositoryInterface) *Update
 }
 
 func (uc *UpdateUserUseCase) Execute(input UpdateUserInputDTO) (UpdateUserOutputDTO, error) {
-	id, err := userPkgEntity.ParseID(input.ID.String())
+	id, err := userPkgEntity.ParseID(input.ID)
 	if err != nil {
 		return UpdateUserOutputDTO{}, err
 	}

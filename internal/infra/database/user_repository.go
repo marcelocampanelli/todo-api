@@ -26,3 +26,33 @@ func (r *UserRepository) Create(user *entity.User) error {
 
 	return nil
 }
+
+func (r *UserRepository) Update(user *entity.User) error {
+	stmt, err := r.Db.Prepare("UPDATE users SET name=$1, email=$2, password=$3, updated_at=$4 WHERE id=$5")
+	if err != nil {
+		return err
+	}
+
+	_, err = stmt.Exec(user.Name, user.Email, user.Password, user.UpdatedAt, user.ID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *UserRepository) FindById(id string) (*entity.User, error) {
+	var user entity.User
+
+	stmt, err := r.Db.Prepare("SELECT id, name, email, password, updated_at FROM users WHERE id=$1")
+	if err != nil {
+		return nil, err
+	}
+
+	err = stmt.QueryRow(id).Scan(&user.ID, &user.Name, &user.Email, &user.Password, &user.UpdatedAt)
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
