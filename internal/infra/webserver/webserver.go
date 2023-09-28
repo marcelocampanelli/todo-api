@@ -30,5 +30,5 @@ func (s *WebServer) Start() {
 	for path, handler := range s.Handlers {
 		s.Router.Handle(path, handler)
 	}
-	http.ListenAndServe(":3000", s.Router)
+	http.ListenAndServe(s.WebServerPort, s.Router)
 }
