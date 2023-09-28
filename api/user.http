@@ -10,7 +10,7 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/users/284582a8-28ce-40bf-8138-e823edcbeb5c HTTP/1.1
+PUT http://localhost:3000/users/d08422c2-9ebb-4712-af08-d31133b824e9 HTTP/1.1
 Host: localhost:3000
 Content-Type: application/json
 
