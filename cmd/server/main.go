@@ -2,10 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
 	"github.com/marcelocampanelli/todo-api/internal/infra/database"
-	"net/http"
+	"github.com/marcelocampanelli/todo-api/internal/infra/handlers"
+	"github.com/marcelocampanelli/todo-api/internal/infra/webserver"
 )
 
 func main() {
@@ -17,10 +16,9 @@ func main() {
 	}
 	defer db.Close()
 
-	r := chi.NewRouter()
-	r.Use(middleware.Logger)
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello World!"))
-	})
-	http.ListenAndServe(":3000", r)
+	server := webserver.NewWebServer(":3000")
+	userHandler := handlers.NewUserHadler(database.NewUserRepositoy(db))
+	server.AddHandler("/users", userHandler.Create)
+	fmt.Println("O SERVER SUBIU CARALHOOO")
+	server.Start()
 }

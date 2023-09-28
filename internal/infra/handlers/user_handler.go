@@ -11,9 +11,9 @@ type UserHandler struct {
 	UserRepository entity.UserRepositoryInterface
 }
 
-func NewUserHadler(userRepository entity.UserRepositoryInterface) *UserHandler {
+func NewUserHadler(UserRepository entity.UserRepositoryInterface) *UserHandler {
 	return &UserHandler{
-		UserRepository: userRepository,
+		UserRepository: UserRepository,
 	}
 }
 

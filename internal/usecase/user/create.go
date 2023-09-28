@@ -1,11 +1,16 @@
 package user
 
-import "github.com/marcelocampanelli/todo-api/internal/domain/entity"
+import (
+	"github.com/marcelocampanelli/todo-api/internal/domain/entity"
+)
 
 type UserInputDTO struct {
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Password string `json:"-"`
+	ID        string `json:"id"`
+	Name      string `json:"name"`
+	Email     string `json:"email"`
+	Password  string `json:"-"`
+	CreatedAt string `json:"created_at"`
+	UpdateAt  string `json:"updated_at"`
 }
 
 type UserOutputDTO struct {
@@ -22,7 +27,7 @@ func NewCreateUserUseCase(userRepository entity.UserRepositoryInterface) *Create
 
 func (c *CreateUserUseCase) Execute(input UserInputDTO) (UserOutputDTO, error) {
 	user, _ := entity.NewUser(input.Name, input.Email, input.Password)
-	err := c.UserRepository.Create(user)
+	err := c.UserRepository.Save(user)
 	if err != nil {
 		return UserOutputDTO{}, err
 	}
