@@ -17,9 +17,11 @@ func main() {
 	defer db.Close()
 
 	server := webserver.NewWebServer(":3000")
-	userHandler := handlers.NewUserHadler(database.NewUserRepositoy(db))
+	userHandler := handlers.NewUserHandler(database.NewUserRepositoy(db))
+	taskHandler := handlers.NewTaskHandler(database.NewTaskRepository(db))
 	server.AddHandler("/users", userHandler.Create)
 	server.AddHandler("/users/{userID}", userHandler.Update)
+	server.AddHandler("/tasks", taskHandler.Create)
 	fmt.Println("O SERVER SUBIU CARALHOOO")
 	server.Start()
 }

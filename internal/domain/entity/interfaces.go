@@ -5,3 +5,7 @@ type UserRepositoryInterface interface {
 	Update(user *User) error
 	FindById(id string) (*User, error)
 }
+
+type TaskRepositoryInterface interface {
+	Create(task *Task) error
+}

@@ -9,6 +9,7 @@ type CreateInputDTO struct {
 	ID        string    `json:"id"`
 	Name      string    `json:"name"`
 	Finished  bool      `json:"finished"`
+	UserID    string    `json:"user_id"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
@@ -27,7 +28,7 @@ func NewCreateTaskUseCase(taskRepository entity.TaskRepositoryInterface) *Create
 }
 
 func (c *CreateTaskUseCase) Execute(input CreateInputDTO) (CreateOutputDTO, error) {
-	task, _ := entity.NewTask(input.Name, input.Finished)
+	task, _ := entity.NewTask(input.Name, input.Finished, input.UserID)
 	err := c.TaskRepository.Create(task)
 	if err != nil {
 		return CreateOutputDTO{}, err
