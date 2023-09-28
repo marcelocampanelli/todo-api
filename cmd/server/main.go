@@ -23,6 +23,7 @@ func main() {
 	server.AddHandler("/users/{userID}", userHandler.Update)
 	server.AddHandler("/tasks", taskHandler.Create)
 	server.AddHandler("/tasks/{taskID}", taskHandler.Update)
+	server.AddHandler("/tasks/{taskID}", taskHandler.Delete)
 	fmt.Println("O SERVER SUBIU CARALHOOO")
 	server.Start()
 }

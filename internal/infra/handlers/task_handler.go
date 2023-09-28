@@ -57,3 +57,18 @@ func (h *TaskHandler) Update(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 }
+
+func (h *TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
+	var dto task.DeleteTaskInputDTO
+
+	dto.ID = chi.URLParam(r, "taskID")
+
+	err := task.NewDeleteTaskUseCase(h.TaskRepository).Execute(dto)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+}

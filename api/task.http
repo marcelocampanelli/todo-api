@@ -18,3 +18,10 @@ Content-Type: application/json
   "name": "Aprender katiaaaau",
   "finished": false
 }
+
+####
+
+DELETE http://localhost:3000/tasks/b6d6f1e7-d522-4575-ba01-2e072fd0f643 HTTP/1.1
+Host: localhost:3000
+
+

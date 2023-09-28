@@ -56,3 +56,17 @@ func (r *TaskRepository) FindById(id string) (*entity.Task, error) {
 
 	return &task, nil
 }
+
+func (r *TaskRepository) Delete(task *entity.Task) error {
+	stmt, err := r.Db.Prepare("DELETE FROM tasks WHERE id=$1")
+	if err != nil {
+		return err
+	}
+
+	_, err = stmt.Exec(task.ID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
