@@ -1,37 +1,31 @@
 package user
 
-import (
-	"github.com/marcelocampanelli/todo-api/internal/domain/entity"
-	"github.com/marcelocampanelli/todo-api/internal/infra/database"
-)
+import "github.com/marcelocampanelli/todo-api/internal/domain/entity"
 
-type CreateUserInputDTO struct {
+type UserInputDTO struct {
 	Name     string `json:"name"`
 	Email    string `json:"email"`
-	Password string `json:"password"`
+	Password string `json:"-"`
 }
 
-type CreateUserOutputDTO struct {
+type UserOutputDTO struct {
 	ID string `json:"id"`
 }
 
-type CreateUseCase struct {
-	ucCreate database.UserInterface
+type CreateUserUseCase struct {
+	UserRepository entity.UserRepositoryInterface
 }
 
-func NewUserCreateUseCase(ucCreate database.UserInterface) *CreateUseCase {
-	return &CreateUseCase{
-		ucCreate: ucCreate,
-	}
+func NewCreateUserUseCase(userRepository entity.UserRepositoryInterface) *CreateUserUseCase {
+	return &CreateUserUseCase{UserRepository: userRepository}
 }
 
-func (uc *CreateUseCase) Create(input *CreateUserInputDTO) (*CreateUserOutputDTO, error) {
-	user, err := entity.NewUser(input.Name, input.Email, input.Password)
+func (c *CreateUserUseCase) Execute(input UserInputDTO) (UserOutputDTO, error) {
+	user, _ := entity.NewUser(input.Name, input.Email, input.Password)
+	err := c.UserRepository.Create(user)
 	if err != nil {
-		return nil, err
+		return UserOutputDTO{}, err
 	}
 
-	return &CreateUserOutputDTO{
-		ID: user.ID.String(),
-	}, nil
+	return UserOutputDTO{ID: user.ID.String()}, nil
 }

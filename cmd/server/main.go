@@ -13,7 +13,7 @@ func main() {
 	db, err := database.ConnectToDatabase()
 	if err != nil {
 		fmt.Println("Error to access database:", err)
-		return
+		panic(err)
 	}
 	defer db.Close()
 
