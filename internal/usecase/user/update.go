@@ -2,7 +2,7 @@ package user
 
 import (
 	"github.com/marcelocampanelli/todo-api/internal/domain/entity"
-	userPkgEntity "github.com/marcelocampanelli/todo-api/pkg/entity"
+	pkgEntity "github.com/marcelocampanelli/todo-api/pkg/entity"
 	"time"
 )
 
@@ -28,7 +28,7 @@ func NewUpdateUserUseCase(userRepository entity.UserRepositoryInterface) *Update
 }
 
 func (uc *UpdateUserUseCase) Execute(input UpdateUserInputDTO) (UpdateUserOutputDTO, error) {
-	id, err := userPkgEntity.ParseID(input.ID)
+	id, err := pkgEntity.ParseID(input.ID)
 	if err != nil {
 		return UpdateUserOutputDTO{}, err
 	}
@@ -48,5 +48,4 @@ func (uc *UpdateUserUseCase) Execute(input UpdateUserInputDTO) (UpdateUserOutput
 	}
 
 	return UpdateUserOutputDTO{ID: user.ID.String(), UpdatedAT: user.UpdatedAt}, nil
-
 }

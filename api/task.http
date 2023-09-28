@@ -5,5 +5,16 @@ Content-Type: application/json
 {
   "name": "Aprender golang",
   "finished": false,
-  "user_id": "4612b133-374c-441b-9bfc-3756fba63cab"
+  "user_id": "6c37e1ef-ac21-4332-96f3-b7378a09543e"
+}
+
+####
+
+POST http://localhost:3000/tasks/b6d6f1e7-d522-4575-ba01-2e072fd0f643 HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+
+{
+  "name": "Aprender katiaaaau",
+  "finished": false
 }

@@ -26,3 +26,33 @@ func (r *TaskRepository) Create(task *entity.Task) error {
 
 	return nil
 }
+
+func (r *TaskRepository) Update(task *entity.Task) error {
+	stmt, err := r.Db.Prepare("UPDATE tasks SET name=$1, finished=$2, updated_at=$3 WHERE id=$4")
+	if err != nil {
+		return err
+	}
+
+	_, err = stmt.Exec(task.Name, task.Finished, task.UpdatedAt, task.ID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *TaskRepository) FindById(id string) (*entity.Task, error) {
+	var task entity.Task
+
+	stmt, err := r.Db.Prepare("SELECT id, name, finished, updated_at FROM tasks WHERE id=$1")
+	if err != nil {
+		return nil, err
+	}
+
+	err = stmt.QueryRow(id).Scan(&task.ID, &task.Name, &task.Finished, &task.UpdatedAt)
+	if err != nil {
+		return nil, err
+	}
+
+	return &task, nil
+}
