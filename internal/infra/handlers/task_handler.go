@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/marcelocampanelli/todo-api/internal/domain/entity"
 	"github.com/marcelocampanelli/todo-api/internal/usecase/task"
@@ -23,6 +24,7 @@ func (h *TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		fmt.Println("Error in task handler, method: create, action: decode json. Error: ", err)
 		return
 	}
 
@@ -30,6 +32,7 @@ func (h *TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 	output, err := createTask.Execute(dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Println("Error in task handler, method: create, action: execute create. Error: ", err)
 		return
 	}
 
@@ -43,6 +46,7 @@ func (h *TaskHandler) Update(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		fmt.Println("Error in task handler, method: update, action: decode json. Error: ", err)
 		return
 	}
 
@@ -51,6 +55,7 @@ func (h *TaskHandler) Update(w http.ResponseWriter, r *http.Request) {
 	err = task.NewUpdateTaskUseCase(h.TaskRepository).Execute(dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Println("Error in task handler, method: create, action: execute update. Error: ", err)
 		return
 	}
 
@@ -66,6 +71,7 @@ func (h *TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	err := task.NewDeleteTaskUseCase(h.TaskRepository).Execute(dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Println("Error in task handler, method: delete, action: execute delete. Error: ", err)
 		return
 	}
 
@@ -76,11 +82,12 @@ func (h *TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
 func (h *TaskHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 	var dto task.FindAllInputDTO
 
-	dto.UserID = chi.URLParam(r, "userID")
+	dto.UserID = chi.URLParam(r, "taskID")
 
 	output, err := task.NewFindAllTasksUseCase(h.TaskRepository).Execute(dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Println("Error in task handler, method: findAll, action: execute findAll. Error: ", err)
 		return
 	}
 
